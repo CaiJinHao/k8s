@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: #元数据
+  name: html #pvc名称
+  namespace: xxxx #命名空间
+spec: #pvc模板
+  selector: #标签选择器
+    matchLabels:  #必须与pv标签信息一致才可关联 如果不指定则随机匹配pv
+	  xxx: xxx
+  accessModes: #访问模型；对象列表 
+  											   #ReadWriteOnce一人读写
+  											   #ReadOnlyMany 多人只读
+  											   #ReadWriteMany多人读写
+    - ReadWriteMany
+  resources: #资源信息
+    requests: #请求容量
+      storage: 99Gi
+  storageClassName: xxxx #存储类名称 注意1.5.2版本不可用
+  volumeMode: Filesystem #卷模式为文件系统 注意1.5.2版本不可用
+  volumeName: pvc-ff926bb2-3029-4a08-b123-31a2ad1b6a19 #卷名称

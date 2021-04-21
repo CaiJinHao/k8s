@@ -1,0 +1,10 @@
+registry:
+  restart: always
+  image: registry:latest
+  container_name: myregistry
+  ports:
+    - 9200:5000
+  volumes:
+    - /e/hostfiles/dockervolume/registry/registry:/var/lib/registry
+    - /e/hostfiles/dockervolume/registry/certs:/certs
+    - /e/hostfiles/dockervolume/registry/auth:/auth

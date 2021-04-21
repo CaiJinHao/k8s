@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:  #元数据
+  annotations: #注释信息
+    k8s.kuboard.cn/workload: nextcloud
+  labels: #标签信息
+    k8s.kuboard.cn/layer: ''
+    k8s.kuboard.cn/name: nextcloud
+  name: nextcloud #名称
+  namespace: nextcloud #命名空间
+spec: #定义Service模板
+  clusterIP: 10.0.181.206 #指定svcip地址 不指定则随机 
+  
+ =================================================================================================
+  #NodePort类型：集群外网络
+  type: NodePort #类型为NodePort  
+  ports:
+    - name: mnwwwp
+      nodePort: 30001 #当type = NodePort时，指定映射到物理机的端口号（外网端口）
+      port: 80 #内网的端口号
+      protocol: TCP #端口协议，支持TCP和UDP，默认TCP
+      targetPort: 80 #需要转发到Pod的端口号
+  
+  ==================================================================================================
+  #ClusterIP类型： 集群内网络
+  type: ClusterIP #
+  ports:
+    - name: mnwwwp
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    - name: j5smwx
+      port: 22
+      protocol: TCP
+      targetPort: 22
+      
+  selector:  #label selector配置，将选择具有label标签的Pod作为管理 
+    k8s.kuboard.cn/layer: ''
+    k8s.kuboard.cn/name: nextcloud
+  sessionAffinity: None #是否支持session

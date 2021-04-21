@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels: #标签信息
+    appname: testmydocker
+  name: tdservice
+  namespace: testmydocker
+spec: #定义Service模板
+  type: LoadBalancer
+  ports:
+  -   name: tport
+      nodePort: 31006 #不填写自动分配,当type = NodePort/LoadBalancer时，指定映射到物理机的端口号（外网端口）
+      port: 80 #暴露的内网端口号
+      targetPort: 80 #Pod内的端口号
+      protocol: TCP #端口协议，支持TCP和UDP，默认TCP
+  selector:  #label selector配置，将选择具有label标签的Pod作为管理 
+    appname: testmydocker
+    version: v1.0.0
+  sessionAffinity: None

@@ -1,0 +1,8 @@
+﻿version: "3.9"
+
+services:
+  imagename:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: "testdocker:${TAG:-latest}"

@@ -1,0 +1,66 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:	#元数据
+  annotations: #注释信息
+    deployment.kubernetes.io/revision: '1'
+    k8s.kuboard.cn/ingress: 'false'
+    k8s.kuboard.cn/service: NodePort
+    k8s.kuboard.cn/workload: nextcloud
+  labels:#标签信息
+    k8s.kuboard.cn/layer: ''						
+    k8s.kuboard.cn/name: nextcloud
+  name: nextcloud#名称
+  namespace: nextcloud#命名空间	
+spec:#定义容器模板，该模板可以包含多个容器	
+  replicas: 3#副本数量
+  selector:#标签选择器
+    matchLabels:
+      k8s.kuboard.cn/layer: ''
+      k8s.kuboard.cn/name: nextcloud
+  strategy:#滚动升级策略
+    type: RollingUpdate#类型
+    rollingUpdate:#由于replicas为3,则整个升级,pod个数在2-4个之间		
+      maxSurge: 25%#滚动升级时会先启动25%pod	
+      maxUnavailable: 25%#滚动升级时允许的最大Unavailable的pod个数
+  template:											#镜像模板										
+    metadata:	#元数据
+      labels:#标签
+        k8s.kuboard.cn/layer: ''
+        k8s.kuboard.cn/name: nextcloud
+    spec: #定义容器模板，该模板可以包含多个容器
+      containers: #容器信息
+		- name: nextcloud #容器名称
+          image: '172.16.20.100/library/nextcloud:yan' #镜像名称
+          imagePullPolicy: Always #镜像下载策略	
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          env
+          resources: #CPU内存限制
+		    limits:	#限制cpu内存											
+              cpu: 200m
+              memory: 200m
+            requests: #请求cpu内存
+              cpu: 100m
+              memory: 100m
+          securityContext: #安全设定
+            privileged: true #开启享有特权
+          volumeMounts:	#挂载volumes中定义的磁盘
+		    - name: html #挂载容器1
+              mountPath: /var/www/html 
+            - name: session #挂载容器1
+              mountPath: /var/lib/php/session			  
+      volumes:  #在该pod上定义共享存储卷列表
+        - name: html #共享存储卷名称 （volumes类型有很多种）
+          persistentVolumeClaim: #volumes类型为pvc
+            claimName: html  #关联pvc名称
+        - name: session
+          persistentVolumeClaim:
+            claimName: session			  
+      restartPolicy: Always	#Pod的重启策略 
+      												#Always表示一旦不管以何种方式终止运行，
+      												#kubelet都将重启，
+      												#OnFailure表示只有Pod以非0退出码退出才重启，
+      												#Nerver表示不再重启该Pod
+      schedulerName: default-scheduler #指定pod调度到节点
