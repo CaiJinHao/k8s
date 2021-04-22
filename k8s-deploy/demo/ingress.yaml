@@ -7,7 +7,8 @@ metadata:
   namespace: testmydocker
 spec:
   rules:
-  - http:
+  - host: tt.6mv6.com #-------------------ngingx的servicename配置，需要在访问的主机执行nginx的主机的地址
+    http:
       paths:
       - pathType: Prefix    #-------------路径匹配类型
         path: /testmydocker #-------------路径地址
