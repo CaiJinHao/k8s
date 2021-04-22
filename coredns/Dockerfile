@@ -1,2 +1,2 @@
-FROM k8s.gcr.io/coredns/coredns:v1.8.0
+FROM quay.io/coreos/flannel:v0.14.0-rc1
 MAINTAINER caijinhao
