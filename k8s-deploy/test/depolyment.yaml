@@ -31,7 +31,7 @@ spec:#定义容器模板，该模板可以包含多个容器
       containers: #容器信息
 		- name: nextcloud #容器名称
           image: '172.16.20.100/library/nextcloud:yan' #镜像名称
-          imagePullPolicy: Always #镜像下载策略	
+          imagePullPolicy: Always #镜像下载策略	IfNotPresent默认值,本地有则使用本地镜像,不拉取
           ports:
             - name: http
               containerPort: 80

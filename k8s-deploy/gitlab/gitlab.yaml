@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitlab
+spec:
+  type: NodePort
+  ports:
+  # Port上的映射端口
+  - port: 443
+    targetPort: 443
+    name: gitlab443
+  - port: 80
+    targetPort: 80
+    name: gitlab80
+  - port: 22
+    targetPort: 22
+    name: gitlab22
+  selector:
+    app: gitlab
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitlab
+spec:
+  selector:
+    matchLabels:
+      app: gitlab
+  revisionHistoryLimit: 2
+  template:
+    metadata:
+      labels:
+        app: gitlab
+    spec:
+      containers:
+      # 应用的镜像
+      - image: gitlab/gitlab-ce 
+        name: gitlab
+        imagePullPolicy: IfNotPresent #默认值,本地有则使用本地镜像,不拉取
+        # 应用的内部端口
+        ports:
+        - containerPort: 443
+          name: gitlab443
+        - containerPort: 80
+          name: gitlab80
+        - containerPort: 22
+          name: gitlab22
+        volumeMounts:
+        # gitlab持久化
+        - name: gitlab-persistent-config
+          mountPath: /etc/gitlab
+        - name: gitlab-persistent-logs
+          mountPath: /var/log/gitlab
+        - name: gitlab-persistent-data
+          mountPath: /var/opt/gitlab
+      imagePullSecrets:
+      - name: devops-repo
+      volumes:
+      # 使用nfs互联网存储
+      - name: gitlab-persistent-config
+        nfs:
+          server: 192.168.8.150
+          path: /k8s-nfs/gitlab/config
+      - name: gitlab-persistent-logs
+        nfs:
+          server: 192.168.8.150
+          path: /k8s-nfs/gitlab/logs
+      - name: gitlab-persistent-data
+        nfs:
+          server: 192.168.8.150
+          path: /k8s-nfs/gitlab/data
