@@ -9,4 +9,4 @@ data:
     - name: my-ip-space
       protocol: bgp
       addresses: 
-      - 192.168.99.200-192.168.99.255
+      - 192.168.10.0/24
