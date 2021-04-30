@@ -26,7 +26,7 @@ spec:
           mountPath: /data
       containers:
       - name: jenkins
-        image: jenkins/jenkins:alpine
+        image: jenkins/jenkins:lts
         imagePullPolicy: IfNotPresent
         env:
         - name: JAVA_OPTS
@@ -66,8 +66,8 @@ spec:
         fsGroup: 1000
       volumes:
       - name: jenkinshome
-        presistentVolumeClaim:
-          claimName: standard
-        # hostPath:
-        #   path: /data/jenkins/
-        #   type: DirectoryOrCreate
+        # presistentVolumeClaim:
+        #   claimName: standard
+        hostPath:
+          path: /data/jenkins/
+          type: DirectoryOrCreate

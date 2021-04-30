@@ -6,7 +6,7 @@ metadata: #元数据
 spec: #pvc模板
   selector: #标签选择器
     matchLabels:  #必须与pv标签信息一致才可关联 如果不指定则随机匹配pv
-	  xxx: xxx
+	    xxx: xxx
   accessModes: #访问模型；对象列表 
   											   #ReadWriteOnce一人读写
   											   #ReadOnlyMany 多人只读

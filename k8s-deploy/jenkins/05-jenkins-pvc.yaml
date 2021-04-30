@@ -1,11 +1,14 @@
 apiVersion: v1
-kind: PersistentVolume
+kind: PersistentVolumeClaim
 metadata:
-  name: pv-jenkins
+  name: pvc-jenkins
   namespace: jenkins
 spec:
-  resources:
-    requests:
+  selector: #标签选择器
+    matchLabels:  #必须与pv标签信息一致才可关联 如果不指定则随机匹配pv
+	    app: opspv 
+  resources: #资源信息
+    requests: #请求容量
       storage: 20Gi
   accessModes:
   - ReadWriteOnce
