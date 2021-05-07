@@ -1,0 +1,40 @@
+# 需要先安装nfs服务
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-imagenet
+spec:
+  capacity:
+    storage: 15Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  mountOptions:
+  - vers=3
+  - nolock
+  - proto=tcp
+  - rsize=1048576
+  - wsize=1048576
+  - hard
+  - timeo=600
+  - retrans=2
+  - noresvport
+  - nfsvers=4.1
+  nfs:
+    path: /data/k8s
+    server: 192.168.99.108
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-imagenet
+  namespace: testmydocker
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 15Gi
+  storageClassName: nfs
