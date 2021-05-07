@@ -27,7 +27,7 @@ spec:
     server: 192.168.99.108 #nfs服务地址（节点ip）
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolumeClaim #一个pod对应一个pvc
 metadata:
   name: nfs-imagenet
   namespace: testmydocker

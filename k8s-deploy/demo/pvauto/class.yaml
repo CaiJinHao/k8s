@@ -5,3 +5,4 @@ metadata:
 provisioner: fuseim.pri/ifs # or choose another name, must match deployment's env PROVISIONER_NAME'
 parameters:
   archiveOnDelete: "false"
+reclaimPolicy: Retain #指定回收策略

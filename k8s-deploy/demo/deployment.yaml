@@ -44,4 +44,4 @@ spec:
       volumes: #在该pod上定义共享存储卷列表
       - name: menutestvm # 共享存储卷名称
         persistentVolumeClaim: #volumes类型为pvc
-          claimName: nfs-imagenet  #关联pvc名称需要和pvc的命名空间一致才能找到，必须在节点上安装nfs客户端
+          claimName: test-claim #nfs-imagenet  #关联pvc名称需要和pvc的命名空间一致才能找到，必须在节点上安装nfs客户端
