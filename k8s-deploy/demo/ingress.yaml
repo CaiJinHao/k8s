@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: myappingress
   labels:
-    appname: testmydocker
+    appname: menutest
   namespace: testmydocker
 spec:
   rules:
@@ -11,7 +11,7 @@ spec:
     http:
       paths:
       - pathType: Prefix    #-------------路径匹配类型
-        path: /testmydocker #-------------路径地址
+        path: /menutest #-------------路径地址
         backend:
-          serviceName: tdservice #--------服务的名称
+          serviceName: menutestservice #--------服务的名称
           servicePort: 80        #--------集群内暴露的端口

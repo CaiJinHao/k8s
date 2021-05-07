@@ -5,16 +5,16 @@ metadata:	#元数据
     deployment.kubernetes.io/revision: '1'
     k8s.kuboard.cn/ingress: 'false'
     k8s.kuboard.cn/service: NodePort
-    k8s.kuboard.cn/workload: testmydocker
+    k8s.kuboard.cn/workload: menutest
   labels: #标签信息
-    appname: testmydocker
-  name: testmydocker #名称
+    appname: menutest
+  name: menutest #名称
   namespace: testmydocker
 spec: 
   replicas: 1 #副本数量
   selector: #标签选择器
     matchLabels:
-      appname: testmydocker
+      appname: menutest
       version: v1.0.0
   strategy: #滚动升级策略
     type: RollingUpdate #类型
@@ -24,12 +24,12 @@ spec:
   template:	
     metadata:	#元数据
       labels: #标签
-        appname: testmydocker
+        appname: menutest
         version: v1.0.0
     spec: #定义容器模板，该模板可以包含多个容器
       containers:
-      - name: testmydocker
-        image: docker.io/caijinhao/menutest
+      - name: cntmenutest
+        image: caijinhao/menutest:latest
         ports:
         - name: http
           containerPort: 80
@@ -38,10 +38,10 @@ spec:
         - name: VERSION
           value: v1.0.0
         volumeMounts:	#挂载volumes中定义的磁盘
-        - name: testmydockervname #共享存储卷名称
-          mountPath: /app/logs #此目录必须是非运行目录，
+        - name: menutestvm #共享存储卷名称
+          mountPath: /app/Logs #此目录必须是非运行目录，
       restartPolicy: Always	# Pod的重启策略
       volumes: #在该pod上定义共享存储卷列表
-      - name: testmydockervname # 共享存储卷名称
+      - name: menutestvm # 共享存储卷名称
         persistentVolumeClaim: #volumes类型为pvc
           claimName: nfs-imagenet  #关联pvc名称需要和pvc的命名空间一致才能找到，必须在节点上安装nfs客户端
