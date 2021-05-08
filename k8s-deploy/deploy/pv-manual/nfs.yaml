@@ -30,7 +30,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim #一个pod对应一个pvc
 metadata:
   name: nfs-imagenet
-  namespace: testmydocker
+  namespace: testmydocker #命名空间要和deployment保持一致
 spec:
   accessModes:
   - ReadWriteMany
