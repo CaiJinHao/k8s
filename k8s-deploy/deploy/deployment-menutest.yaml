@@ -39,7 +39,7 @@ spec:
           value: v1.0.0
         volumeMounts:	#挂载volumes中定义的磁盘
         - name: menutestvm #共享存储卷名称
-          mountPath: /app/Logs #此目录必须是非运行目录，
+          mountPath: /app/Logs #此目录必须是非运行目录，非Dockerfile打包文件
       restartPolicy: Always	# Pod的重启策略
       volumes: #在该pod上定义共享存储卷列表
       - name: menutestvm # 共享存储卷名称
