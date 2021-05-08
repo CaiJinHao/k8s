@@ -1,0 +1,26 @@
+apiVersion: data.fluid.io/v1alpha1
+kind: Dataset
+metadata:
+  name: fluid-imagenet
+  namespace: testmydocker
+spec:
+  mounts:
+  - mountPoint: pvc://test-claim
+    name: test-claim
+---
+apiVersion: data.fluid.io/v1alpha1
+kind: AlluxioRuntime
+metadata:
+  name: fluid-imagenet
+  namespace: testmydocker
+spec:
+  replicas: 1
+  data:
+    replicas: 1
+  tieredstore:
+    levels:
+      - mediumtype: SSD
+        path: /var/lib/docker/alluxio
+        quota: 5Gi
+        high: "0.99"
+        low: "0.8"
