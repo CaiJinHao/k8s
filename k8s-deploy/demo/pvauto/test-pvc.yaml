@@ -4,6 +4,7 @@ metadata:
   name: test-claim
   annotations:
     volume.beta.kubernetes.io/storage-class: "managed-nfs-storage"
+    volume.beta.kubernetes.io/storage-provisioner: fuseim.pri/ifs
 spec:
   accessModes:
     - ReadWriteMany
