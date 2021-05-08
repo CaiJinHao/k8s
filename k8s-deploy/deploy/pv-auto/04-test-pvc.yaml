@@ -5,7 +5,6 @@ metadata:
   namespace: testmydocker #命名空间要和deployment保持一致
   annotations:
     volume.beta.kubernetes.io/storage-class: "managed-nfs-storage"
-    volume.beta.kubernetes.io/storage-provisioner: fuseim.pri/ifs
 spec:
   accessModes:
     - ReadWriteMany
