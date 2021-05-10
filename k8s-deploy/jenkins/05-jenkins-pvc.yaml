@@ -1,15 +1,13 @@
-apiVersion: v1
 kind: PersistentVolumeClaim
+apiVersion: v1
 metadata:
-  name: pvc-jenkins
+  name: jenkinspvc
   namespace: jenkins
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "managed-nfs-storage"
 spec:
-  selector: #标签选择器
-    matchLabels:  #必须与pv标签信息一致才可关联 如果不指定则随机匹配pv
-	    app: opspv 
-  resources: #资源信息
-    requests: #请求容量
-      storage: 20Gi
   accessModes:
-  - ReadWriteOnce
-  storageClassName: standard
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi

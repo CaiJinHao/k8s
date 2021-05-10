@@ -24,6 +24,7 @@ spec:
         volumeMounts:
         - name: jenkinshome
           mountPath: /data
+          subPath: data
       containers:
       - name: jenkins
         image: jenkins/jenkins:lts
@@ -62,12 +63,13 @@ spec:
         volumeMounts:
         - name: jenkinshome
           mountPath: /var/jenkins_home
+          subPath: jenkins_home
       securityContext:
         fsGroup: 1000
       volumes:
       - name: jenkinshome
-        # presistentVolumeClaim:
-        #   claimName: standard
-        hostPath:
-          path: /data/jenkins/
-          type: DirectoryOrCreate
+        persistentVolumeClaim:
+          claimName: jenkinspvc
+        # hostPath:
+        #   path: /data/jenkins/
+        #   type: DirectoryOrCreate

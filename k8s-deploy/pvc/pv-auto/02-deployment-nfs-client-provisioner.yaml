@@ -29,11 +29,11 @@ spec:
             - name: PROVISIONER_NAME
               value: caijinhao
             - name: NFS_SERVER
-              value: 192.168.56.110
+              value: 192.168.99.113
             - name: NFS_PATH
               value: /sharemnt
       volumes:
         - name: nfs-client-root
           nfs:
-            server: 192.168.56.110
+            server: 192.168.99.113
             path: /sharemnt
