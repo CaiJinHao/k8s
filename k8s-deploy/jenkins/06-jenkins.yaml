@@ -27,7 +27,7 @@ spec:
           subPath: data
       containers:
       - name: jenkins
-        image: jenkins/jenkins:lts
+        image: jenkins/jenkins:alpine
         imagePullPolicy: IfNotPresent
         env:
         - name: JAVA_OPTS
