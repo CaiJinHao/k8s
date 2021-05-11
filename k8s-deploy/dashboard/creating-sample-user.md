@@ -42,6 +42,25 @@ subjects:
 EOF
 ```
 
+
+```shell
+cat <<EOF | kubectl apply -f -
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: menutest
+  namespace: jenkins
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "managed-nfs-storage"
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+EOF
+```
+
 ## Getting a Bearer Token
 
 Now we need to find token we can use to log in. Execute following command:
